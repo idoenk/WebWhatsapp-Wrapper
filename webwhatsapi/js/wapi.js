@@ -674,7 +674,8 @@ window.WAPI.ReplyMessage = function (idMessage, message, done) {
         if (done !== undefined) done(false);
         return false;
     }
-    messageObject = messageObject.value();
+    if (messageObject && 'function' == typeof messageObject.valueOf)
+        messageObject = messageObject.valueOf();
 
     const chat = WAPI.getChat(messageObject.chat.id)
     if (chat !== undefined) {
@@ -694,7 +695,7 @@ window.WAPI.ReplyMessage = function (idMessage, message, done) {
                             continue;
                         }
                         done(WAPI._serializeMessageObj(msg));
-                        return True;
+                        return true;
                     }
                     trials += 1;
                     console.log(trials);
@@ -917,7 +918,7 @@ window.WAPI.sendMessage = function (id, message, done) {
                             continue;
                         }
                         done(WAPI._serializeMessageObj(msg));
-                        return True;
+                        return true;
                     }
                     trials += 1;
                     console.log(trials);
